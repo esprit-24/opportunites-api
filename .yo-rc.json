@@ -1,0 +1,33 @@
+{
+  "generator-jhipster": {
+    "applicationType": "monolith",
+    "authenticationType": "jwt",
+    "baseName": "opportunites",
+    "buildTool": "maven",
+    "cacheProvider": "ehcache",
+    "clientFramework": "angular",
+    "clientTestFrameworks": [],
+    "clientTheme": "none",
+    "creationTimestamp": 1753866997992,
+    "databaseType": "sql",
+    "devDatabaseType": "postgresql",
+    "enableHibernateCache": true,
+    "enableTranslation": true,
+    "entities": [],
+    "feignClient": null,
+    "jhipsterVersion": "8.11.0",
+    "jwtSecretKey": "MTA0MjZmODAyMmNiZmY3NzU1MjYyYWJhNjQyOWU5ZmFlMzA4MGQ5YTM4OTYyNWM3ZTU4OGEzZGJiNzYxMmExMzU1MTc3ZTk1NWVlZWExOTU1MTZkZmE4NGVmOGZjYjdkNTExYTRiMTIwOGQwODlhZWVhNWRjNGEyZTkyNWNhYzE=",
+    "languages": ["fr", "en"],
+    "microfrontend": null,
+    "microfrontends": [],
+    "nativeLanguage": "fr",
+    "packageName": "esprit.opportunites",
+    "prodDatabaseType": "postgresql",
+    "reactive": false,
+    "serverPort": null,
+    "serviceDiscoveryType": null,
+    "syncUserWithIdp": null,
+    "testFrameworks": [],
+    "withAdminUi": true
+  }
+}
