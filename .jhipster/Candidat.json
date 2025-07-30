@@ -1,0 +1,57 @@
+{
+  "annotations": {
+    "changelogDate": "20250730110907"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "dateNaissance",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "niveauEtude",
+      "fieldType": "NiveauEtude",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "CFEE,BFEM,BAC,LICENCE,MASTER,DOCTORAT"
+    },
+    {
+      "fieldName": "cvUrl",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "statutActuel",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Candidat",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "options": {
+        "id": true,
+        "onDelete": "CASCADE"
+      },
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "candidat",
+      "relationshipName": "user",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one",
+      "relationshipWithBuiltInEntity": true
+    },
+    {
+      "otherEntityName": "profil",
+      "relationshipName": "profil",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "domaine",
+      "relationshipName": "domaine",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

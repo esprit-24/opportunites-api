@@ -1,0 +1,36 @@
+{
+  "opportunitesApp": {
+    "opportunite": {
+      "home": {
+        "title": "Opportunites",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Opportunite",
+        "createOrEditLabel": "Create or edit a Opportunite",
+        "notFound": "No Opportunites found"
+      },
+      "created": "A new Opportunite is created with identifier {{ param }}",
+      "updated": "A Opportunite is updated with identifier {{ param }}",
+      "deleted": "A Opportunite is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Opportunite {{ id }}?"
+      },
+      "detail": {
+        "title": "Opportunite"
+      },
+      "id": "ID",
+      "titre": "Titre",
+      "description": "Description",
+      "dateDebut": "Date Debut",
+      "dateFin": "Date Fin",
+      "adresse": "Adresse",
+      "niveauEtudeRequis": "Niveau Etude Requis",
+      "nombrePostes": "Nombre Postes",
+      "salaire": "Salaire",
+      "statut": "Statut",
+      "typeContrat": "Type Contrat",
+      "domaine": "Domaine",
+      "organisation": "Organisation",
+      "ville": "Ville"
+    }
+  }
+}

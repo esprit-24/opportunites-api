@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (departement(); as departementRef) {
+      <div>
+        <h2 data-cy="departementDetailsHeading"><span jhiTranslate="opportunitesApp.departement.detail.title">Departement</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ departementRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.departement.nom">Nom</span></dt>
+          <dd>
+            <span>{{ departementRef.nom }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.departement.region">Region</span></dt>
+          <dd>
+            @if (departement()!.region) {
+              <div>
+                <a [routerLink]="['/region', departement()!.region?.id, 'view']">{{ departementRef.region?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/departement', departementRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

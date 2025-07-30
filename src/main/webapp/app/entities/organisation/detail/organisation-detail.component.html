@@ -1,0 +1,70 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (organisation(); as organisationRef) {
+      <div>
+        <h2 data-cy="organisationDetailsHeading"><span jhiTranslate="opportunitesApp.organisation.detail.title">Organisation</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ organisationRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.organisation.nom">Nom</span></dt>
+          <dd>
+            <span>{{ organisationRef.nom }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.organisation.presentation">Presentation</span></dt>
+          <dd>
+            <span>{{ organisationRef.presentation }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.organisation.secteurActivite">Secteur Activite</span></dt>
+          <dd>
+            <span>{{ organisationRef.secteurActivite }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.organisation.logoUrl">Logo Url</span></dt>
+          <dd>
+            <span>{{ organisationRef.logoUrl }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.organisation.adresse">Adresse</span></dt>
+          <dd>
+            <span>{{ organisationRef.adresse }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.organisation.siteWeb">Site Web</span></dt>
+          <dd>
+            <span>{{ organisationRef.siteWeb }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.organisation.emailContact">Email Contact</span></dt>
+          <dd>
+            <span>{{ organisationRef.emailContact }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.organisation.telephone">Telephone</span></dt>
+          <dd>
+            <span>{{ organisationRef.telephone }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.organisation.ville">Ville</span></dt>
+          <dd>
+            @if (organisation()!.ville) {
+              <div>
+                <a [routerLink]="['/ville', organisation()!.ville?.id, 'view']">{{ organisationRef.ville?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/organisation', organisationRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

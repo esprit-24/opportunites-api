@@ -1,0 +1,41 @@
+{
+  "annotations": {
+    "changelogDate": "20250730110910"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "datePostulation",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "statutCandidature",
+      "fieldType": "StatutCandidature",
+      "fieldValues": "EN_ATTENTE_VALIDATION_ADMIN,REJETEE_ADMIN,VALIDEE_ADMIN,VUE_RECRUTEUR,ACCEPTEE_RECRUTEUR,REFUSEE_RECRUTEUR"
+    },
+    {
+      "fieldName": "lettreMotivation",
+      "fieldType": "TextBlob"
+    }
+  ],
+  "name": "Candidature",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "opportunite",
+      "relationshipName": "opportunite",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "candidat",
+      "relationshipName": "candidat",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

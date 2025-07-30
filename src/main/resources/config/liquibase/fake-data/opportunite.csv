@@ -1,0 +1,11 @@
+id;titre;description;date_debut;date_fin;adresse;niveau_etude_requis;nombre_postes;salaire;statut;type_contrat
+1;basculer plouf;../fake-data/blob/hipster.txt;2025-07-30T02:06:48;2025-07-29T15:34:00;nonobstant debout proche de;BFEM;14030;20631.05;EXPIREE;CDI
+2;diplomate;../fake-data/blob/hipster.txt;2025-07-29T17:29:30;2025-07-30T00:44:12;neutre;LICENCE;15195;23236.97;ACTIVE;FREELANCE
+3;assez;../fake-data/blob/hipster.txt;2025-07-29T23:10:15;2025-07-29T12:02:33;traiter concurrence tellement;BFEM;26812;10282.56;POURVUE;STAGE
+4;à peu près sur si;../fake-data/blob/hipster.txt;2025-07-29T17:27:39;2025-07-30T00:58:47;clientèle cocorico;DOCTORAT;14681;31520.16;POURVUE;STAGE
+5;simple;../fake-data/blob/hipster.txt;2025-07-29T18:34:49;2025-07-30T01:13:11;sous couleur de meuh glouglou;DOCTORAT;24933;1385.22;POURVUE;FREELANCE
+6;au lieu de soupçonner;../fake-data/blob/hipster.txt;2025-07-29T14:01:58;2025-07-29T12:25:04;derrière;MASTER;10476;29657.63;EXPIREE;ALTERNANCE
+7;de façon à miaou avare;../fake-data/blob/hipster.txt;2025-07-30T06:34:02;2025-07-30T00:14:26;sus grossir avare;CFEE;32196;10646.55;EXPIREE;THESE
+8;coac coac cocorico bien;../fake-data/blob/hipster.txt;2025-07-30T03:27:55;2025-07-29T22:34:55;au défaut de parce que;CFEE;10786;21369.18;EXPIREE;ALTERNANCE
+9;de crainte que;../fake-data/blob/hipster.txt;2025-07-29T13:01:53;2025-07-29T13:45:16;extra;CFEE;30980;12236;ACTIVE;FREELANCE
+10;main-d’œuvre parlementaire;../fake-data/blob/hipster.txt;2025-07-29T18:32:17;2025-07-29T18:25:26;toc-toc;DOCTORAT;7912;22657.58;POURVUE;CDI

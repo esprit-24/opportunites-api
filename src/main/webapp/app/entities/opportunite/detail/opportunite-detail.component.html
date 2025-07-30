@@ -1,0 +1,104 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (opportunite(); as opportuniteRef) {
+      <div>
+        <h2 data-cy="opportuniteDetailsHeading"><span jhiTranslate="opportunitesApp.opportunite.detail.title">Opportunite</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ opportuniteRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.opportunite.titre">Titre</span></dt>
+          <dd>
+            <span>{{ opportuniteRef.titre }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.opportunite.description">Description</span></dt>
+          <dd>
+            <span>{{ opportuniteRef.description }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.opportunite.dateDebut">Date Debut</span></dt>
+          <dd>
+            <span>{{ opportuniteRef.dateDebut | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.opportunite.dateFin">Date Fin</span></dt>
+          <dd>
+            <span>{{ opportuniteRef.dateFin | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.opportunite.adresse">Adresse</span></dt>
+          <dd>
+            <span>{{ opportuniteRef.adresse }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.opportunite.niveauEtudeRequis">Niveau Etude Requis</span></dt>
+          <dd>
+            <span [jhiTranslate]="'opportunitesApp.NiveauEtude.' + (opportuniteRef.niveauEtudeRequis ?? 'null')">{{
+              { null: '', CFEE: 'CFEE', BFEM: 'BFEM', BAC: 'BAC', LICENCE: 'LICENCE', MASTER: 'MASTER', DOCTORAT: 'DOCTORAT' }[
+                opportuniteRef.niveauEtudeRequis ?? 'null'
+              ]
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.opportunite.nombrePostes">Nombre Postes</span></dt>
+          <dd>
+            <span>{{ opportuniteRef.nombrePostes }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.opportunite.salaire">Salaire</span></dt>
+          <dd>
+            <span>{{ opportuniteRef.salaire }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.opportunite.statut">Statut</span></dt>
+          <dd>
+            <span [jhiTranslate]="'opportunitesApp.Statut.' + (opportuniteRef.statut ?? 'null')">{{
+              { null: '', ACTIVE: 'ACTIVE', EXPIREE: 'EXPIREE', POURVUE: 'POURVUE' }[opportuniteRef.statut ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.opportunite.typeContrat">Type Contrat</span></dt>
+          <dd>
+            <span [jhiTranslate]="'opportunitesApp.TypeContrat.' + (opportuniteRef.typeContrat ?? 'null')">{{
+              { null: '', CDI: 'CDI', CDD: 'CDD', STAGE: 'STAGE', FREELANCE: 'FREELANCE', ALTERNANCE: 'ALTERNANCE', THESE: 'THESE' }[
+                opportuniteRef.typeContrat ?? 'null'
+              ]
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.opportunite.domaine">Domaine</span></dt>
+          <dd>
+            @if (opportunite()!.domaine) {
+              <div>
+                <a [routerLink]="['/domaine', opportunite()!.domaine?.id, 'view']">{{ opportuniteRef.domaine?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.opportunite.organisation">Organisation</span></dt>
+          <dd>
+            @if (opportunite()!.organisation) {
+              <div>
+                <a [routerLink]="['/organisation', opportunite()!.organisation?.id, 'view']">{{ opportuniteRef.organisation?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.opportunite.ville">Ville</span></dt>
+          <dd>
+            @if (opportunite()!.ville) {
+              <div>
+                <a [routerLink]="['/ville', opportunite()!.ville?.id, 'view']">{{ opportuniteRef.ville?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/opportunite', opportuniteRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

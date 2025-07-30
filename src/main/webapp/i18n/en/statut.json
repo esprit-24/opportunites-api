@@ -1,0 +1,10 @@
+{
+  "opportunitesApp": {
+    "Statut": {
+      "null": "",
+      "ACTIVE": "ACTIVE",
+      "EXPIREE": "EXPIREE",
+      "POURVUE": "POURVUE"
+    }
+  }
+}

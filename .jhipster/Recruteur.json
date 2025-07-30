@@ -1,0 +1,41 @@
+{
+  "annotations": {
+    "changelogDate": "20250730110908"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "titreProfessionnel",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "biographie",
+      "fieldType": "TextBlob"
+    }
+  ],
+  "name": "Recruteur",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "options": {
+        "id": true,
+        "onDelete": "CASCADE"
+      },
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "recruteur",
+      "relationshipName": "user",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one",
+      "relationshipWithBuiltInEntity": true
+    },
+    {
+      "otherEntityName": "organisation",
+      "relationshipName": "organisation",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

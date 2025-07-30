@@ -1,0 +1,26 @@
+{
+  "annotations": {
+    "changelogDate": "20250730110905"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "nom",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "Ville",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "departement",
+      "relationshipName": "departement",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

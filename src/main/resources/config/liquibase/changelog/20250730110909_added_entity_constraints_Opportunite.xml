@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity Opportunite.
+    -->
+    <changeSet id="20250730110909-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="domaine_id"
+                                 baseTableName="opportunite"
+                                 constraintName="fk_opportunite__domaine_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="domaine"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="organisation_id"
+                                 baseTableName="opportunite"
+                                 constraintName="fk_opportunite__organisation_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="organisation"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="ville_id"
+                                 baseTableName="opportunite"
+                                 constraintName="fk_opportunite__ville_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ville"
+                                 />
+    </changeSet>
+</databaseChangeLog>

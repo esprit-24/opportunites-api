@@ -8,7 +8,16 @@
       "entities": {
         "main": "Entités",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
-        "adminAuthority": "Authority"
+        "profil": "Profil",
+        "domaine": "Domaine",
+        "region": "Region",
+        "departement": "Departement",
+        "ville": "Ville",
+        "organisation": "Organisation",
+        "candidat": "Candidat",
+        "recruteur": "Recruteur",
+        "opportunite": "Opportunite",
+        "candidature": "Candidature"
       },
       "account": {
         "main": "Compte",

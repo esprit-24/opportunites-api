@@ -1,0 +1,26 @@
+{
+  "annotations": {
+    "changelogDate": "20250730110901"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "intitule",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "Profil",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "domaine",
+      "relationshipName": "domaine",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

@@ -1,0 +1,130 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-candidat-heading" data-cy="CandidatCreateUpdateHeading" jhiTranslate="opportunitesApp.candidat.home.createOrEditLabel">
+        Créer ou éditer un Candidat
+      </h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="opportunitesApp.candidat.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_dateNaissance" jhiTranslate="opportunitesApp.candidat.dateNaissance">Date Naissance</label>
+          <div class="d-flex">
+            <input
+              id="field_dateNaissance"
+              data-cy="dateNaissance"
+              type="datetime-local"
+              class="form-control"
+              name="dateNaissance"
+              formControlName="dateNaissance"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        @let niveauEtudeRef = editForm.get('niveauEtude')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_niveauEtude" jhiTranslate="opportunitesApp.candidat.niveauEtude">Niveau Etude</label>
+          <select class="form-control" name="niveauEtude" formControlName="niveauEtude" id="field_niveauEtude" data-cy="niveauEtude">
+            <option [ngValue]="null">{{ 'opportunitesApp.NiveauEtude.null' | translate }}</option>
+            @for (niveauEtude of niveauEtudeValues; track $index) {
+              <option [value]="niveauEtude">{{ 'opportunitesApp.NiveauEtude.' + niveauEtude | translate }}</option>
+            }
+          </select>
+          @if (niveauEtudeRef.invalid && (niveauEtudeRef.dirty || niveauEtudeRef.touched)) {
+            <div>
+              @if (editForm.get('niveauEtude')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_cvUrl" jhiTranslate="opportunitesApp.candidat.cvUrl">Cv Url</label>
+          <input type="text" class="form-control" name="cvUrl" id="field_cvUrl" data-cy="cvUrl" formControlName="cvUrl" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_statutActuel" jhiTranslate="opportunitesApp.candidat.statutActuel">Statut Actuel</label>
+          <input
+            type="text"
+            class="form-control"
+            name="statutActuel"
+            id="field_statutActuel"
+            data-cy="statutActuel"
+            formControlName="statutActuel"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_user" jhiTranslate="opportunitesApp.candidat.user">User</label>
+          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUser">
+            <option [ngValue]="null"></option>
+            @for (userOption of usersSharedCollection; track $index) {
+              <option [ngValue]="userOption">{{ userOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_profil" jhiTranslate="opportunitesApp.candidat.profil">Profil</label>
+          <select
+            class="form-control"
+            id="field_profil"
+            data-cy="profil"
+            name="profil"
+            formControlName="profil"
+            [compareWith]="compareProfil"
+          >
+            <option [ngValue]="null"></option>
+            @for (profilOption of profilsSharedCollection; track $index) {
+              <option [ngValue]="profilOption">{{ profilOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_domaine" jhiTranslate="opportunitesApp.candidat.domaine">Domaine</label>
+          <select
+            class="form-control"
+            id="field_domaine"
+            data-cy="domaine"
+            name="domaine"
+            formControlName="domaine"
+            [compareWith]="compareDomaine"
+          >
+            <option [ngValue]="null"></option>
+            @for (domaineOption of domainesSharedCollection; track $index) {
+              <option [ngValue]="domaineOption">{{ domaineOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

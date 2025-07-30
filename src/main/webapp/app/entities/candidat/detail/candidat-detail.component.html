@@ -1,0 +1,70 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (candidat(); as candidatRef) {
+      <div>
+        <h2 data-cy="candidatDetailsHeading"><span jhiTranslate="opportunitesApp.candidat.detail.title">Candidat</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ candidatRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.candidat.dateNaissance">Date Naissance</span></dt>
+          <dd>
+            <span>{{ candidatRef.dateNaissance | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.candidat.niveauEtude">Niveau Etude</span></dt>
+          <dd>
+            <span [jhiTranslate]="'opportunitesApp.NiveauEtude.' + (candidatRef.niveauEtude ?? 'null')">{{
+              { null: '', CFEE: 'CFEE', BFEM: 'BFEM', BAC: 'BAC', LICENCE: 'LICENCE', MASTER: 'MASTER', DOCTORAT: 'DOCTORAT' }[
+                candidatRef.niveauEtude ?? 'null'
+              ]
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.candidat.cvUrl">Cv Url</span></dt>
+          <dd>
+            <span>{{ candidatRef.cvUrl }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.candidat.statutActuel">Statut Actuel</span></dt>
+          <dd>
+            <span>{{ candidatRef.statutActuel }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.candidat.user">User</span></dt>
+          <dd>
+            <span>{{ candidatRef.user?.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.candidat.profil">Profil</span></dt>
+          <dd>
+            @if (candidat()!.profil) {
+              <div>
+                <a [routerLink]="['/profil', candidat()!.profil?.id, 'view']">{{ candidatRef.profil?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.candidat.domaine">Domaine</span></dt>
+          <dd>
+            @if (candidat()!.domaine) {
+              <div>
+                <a [routerLink]="['/domaine', candidat()!.domaine?.id, 'view']">{{ candidatRef.domaine?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/candidat', candidatRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

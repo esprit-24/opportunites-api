@@ -1,0 +1,25 @@
+{
+  "opportunitesApp": {
+    "domaine": {
+      "home": {
+        "title": "Domaines",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Domaine",
+        "createOrEditLabel": "Create or edit a Domaine",
+        "notFound": "No Domaines found"
+      },
+      "created": "A new Domaine is created with identifier {{ param }}",
+      "updated": "A Domaine is updated with identifier {{ param }}",
+      "deleted": "A Domaine is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Domaine {{ id }}?"
+      },
+      "detail": {
+        "title": "Domaine"
+      },
+      "id": "ID",
+      "intitule": "Intitule",
+      "description": "Description"
+    }
+  }
+}

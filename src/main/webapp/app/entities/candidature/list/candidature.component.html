@@ -1,0 +1,157 @@
+<div>
+  <h2 id="page-heading" data-cy="CandidatureHeading">
+    <span jhiTranslate="opportunitesApp.candidature.home.title">Candidatures</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span jhiTranslate="opportunitesApp.candidature.home.refreshListLabel">Actualiser la liste</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-candidature"
+        [routerLink]="['/candidature/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="opportunitesApp.candidature.home.createLabel">Créer un nouveau Candidature</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error />
+
+  <jhi-alert />
+
+  @if (candidatures().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="opportunitesApp.candidature.home.notFound">Aucun Candidature trouvé</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="datePostulation">
+              <div class="d-flex">
+                <span jhiTranslate="opportunitesApp.candidature.datePostulation">Date Postulation</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="statutCandidature">
+              <div class="d-flex">
+                <span jhiTranslate="opportunitesApp.candidature.statutCandidature">Statut Candidature</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="lettreMotivation">
+              <div class="d-flex">
+                <span jhiTranslate="opportunitesApp.candidature.lettreMotivation">Lettre Motivation</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="opportunite.id">
+              <div class="d-flex">
+                <span jhiTranslate="opportunitesApp.candidature.opportunite">Opportunite</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="candidat.id">
+              <div class="d-flex">
+                <span jhiTranslate="opportunitesApp.candidature.candidat">Candidat</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (candidature of candidatures(); track trackId(candidature)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/candidature', candidature.id, 'view']">{{ candidature.id }}</a>
+              </td>
+              <td>{{ candidature.datePostulation | formatMediumDatetime }}</td>
+              <td [jhiTranslate]="'opportunitesApp.StatutCandidature.' + (candidature.statutCandidature ?? 'null')">
+                {{
+                  {
+                    null: '',
+                    EN_ATTENTE_VALIDATION_ADMIN: 'EN_ATTENTE_VALIDATION_ADMIN',
+                    REJETEE_ADMIN: 'REJETEE_ADMIN',
+                    VALIDEE_ADMIN: 'VALIDEE_ADMIN',
+                    VUE_RECRUTEUR: 'VUE_RECRUTEUR',
+                    ACCEPTEE_RECRUTEUR: 'ACCEPTEE_RECRUTEUR',
+                    REFUSEE_RECRUTEUR: 'REFUSEE_RECRUTEUR',
+                  }[candidature.statutCandidature ?? 'null']
+                }}
+              </td>
+              <td>{{ candidature.lettreMotivation }}</td>
+              <td>
+                @if (candidature.opportunite) {
+                  <div>
+                    <a [routerLink]="['/opportunite', candidature.opportunite.id, 'view']">{{ candidature.opportunite.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (candidature.candidat) {
+                  <div>
+                    <a [routerLink]="['/candidat', candidature.candidat.id, 'view']">{{ candidature.candidat.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/candidature', candidature.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Voir</span>
+                  </a>
+
+                  <a [routerLink]="['/candidature', candidature.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editer</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(candidature)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Supprimer</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (candidatures().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page, totalItems, itemsPerPage }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

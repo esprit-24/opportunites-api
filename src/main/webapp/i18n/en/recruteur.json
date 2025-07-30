@@ -1,0 +1,27 @@
+{
+  "opportunitesApp": {
+    "recruteur": {
+      "home": {
+        "title": "Recruteurs",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Recruteur",
+        "createOrEditLabel": "Create or edit a Recruteur",
+        "notFound": "No Recruteurs found"
+      },
+      "created": "A new Recruteur is created with identifier {{ param }}",
+      "updated": "A Recruteur is updated with identifier {{ param }}",
+      "deleted": "A Recruteur is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Recruteur {{ id }}?"
+      },
+      "detail": {
+        "title": "Recruteur"
+      },
+      "id": "ID",
+      "titreProfessionnel": "Titre Professionnel",
+      "biographie": "Biographie",
+      "user": "User",
+      "organisation": "Organisation"
+    }
+  }
+}

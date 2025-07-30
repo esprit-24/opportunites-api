@@ -1,0 +1,234 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-opportunite-heading"
+        data-cy="OpportuniteCreateUpdateHeading"
+        jhiTranslate="opportunitesApp.opportunite.home.createOrEditLabel"
+      >
+        Créer ou éditer un Opportunite
+      </h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="opportunitesApp.opportunite.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let titreRef = editForm.get('titre')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_titre" jhiTranslate="opportunitesApp.opportunite.titre">Titre</label>
+          <input type="text" class="form-control" name="titre" id="field_titre" data-cy="titre" formControlName="titre" />
+          @if (titreRef.invalid && (titreRef.dirty || titreRef.touched)) {
+            <div>
+              @if (editForm.get('titre')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let descriptionRef = editForm.get('description')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_description" jhiTranslate="opportunitesApp.opportunite.description">Description</label>
+          <textarea
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          ></textarea>
+          @if (descriptionRef.invalid && (descriptionRef.dirty || descriptionRef.touched)) {
+            <div>
+              @if (editForm.get('description')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let dateDebutRef = editForm.get('dateDebut')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_dateDebut" jhiTranslate="opportunitesApp.opportunite.dateDebut">Date Debut</label>
+          <div class="d-flex">
+            <input
+              id="field_dateDebut"
+              data-cy="dateDebut"
+              type="datetime-local"
+              class="form-control"
+              name="dateDebut"
+              formControlName="dateDebut"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (dateDebutRef.invalid && (dateDebutRef.dirty || dateDebutRef.touched)) {
+            <div>
+              @if (editForm.get('dateDebut')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('dateDebut')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >Ce champ doit être une date et une heure.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_dateFin" jhiTranslate="opportunitesApp.opportunite.dateFin">Date Fin</label>
+          <div class="d-flex">
+            <input
+              id="field_dateFin"
+              data-cy="dateFin"
+              type="datetime-local"
+              class="form-control"
+              name="dateFin"
+              formControlName="dateFin"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_adresse" jhiTranslate="opportunitesApp.opportunite.adresse">Adresse</label>
+          <input type="text" class="form-control" name="adresse" id="field_adresse" data-cy="adresse" formControlName="adresse" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_niveauEtudeRequis" jhiTranslate="opportunitesApp.opportunite.niveauEtudeRequis"
+            >Niveau Etude Requis</label
+          >
+          <select
+            class="form-control"
+            name="niveauEtudeRequis"
+            formControlName="niveauEtudeRequis"
+            id="field_niveauEtudeRequis"
+            data-cy="niveauEtudeRequis"
+          >
+            <option [ngValue]="null">{{ 'opportunitesApp.NiveauEtude.null' | translate }}</option>
+            @for (niveauEtude of niveauEtudeValues; track $index) {
+              <option [value]="niveauEtude">{{ 'opportunitesApp.NiveauEtude.' + niveauEtude | translate }}</option>
+            }
+          </select>
+        </div>
+
+        @let nombrePostesRef = editForm.get('nombrePostes')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_nombrePostes" jhiTranslate="opportunitesApp.opportunite.nombrePostes">Nombre Postes</label>
+          <input
+            type="number"
+            class="form-control"
+            name="nombrePostes"
+            id="field_nombrePostes"
+            data-cy="nombrePostes"
+            formControlName="nombrePostes"
+          />
+          @if (nombrePostesRef.invalid && (nombrePostesRef.dirty || nombrePostesRef.touched)) {
+            <div>
+              @if (editForm.get('nombrePostes')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('nombrePostes')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >Ce champ doit être un nombre.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_salaire" jhiTranslate="opportunitesApp.opportunite.salaire">Salaire</label>
+          <input type="number" class="form-control" name="salaire" id="field_salaire" data-cy="salaire" formControlName="salaire" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_statut" jhiTranslate="opportunitesApp.opportunite.statut">Statut</label>
+          <select class="form-control" name="statut" formControlName="statut" id="field_statut" data-cy="statut">
+            <option [ngValue]="null">{{ 'opportunitesApp.Statut.null' | translate }}</option>
+            @for (statut of statutValues; track $index) {
+              <option [value]="statut">{{ 'opportunitesApp.Statut.' + statut | translate }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_typeContrat" jhiTranslate="opportunitesApp.opportunite.typeContrat">Type Contrat</label>
+          <select class="form-control" name="typeContrat" formControlName="typeContrat" id="field_typeContrat" data-cy="typeContrat">
+            <option [ngValue]="null">{{ 'opportunitesApp.TypeContrat.null' | translate }}</option>
+            @for (typeContrat of typeContratValues; track $index) {
+              <option [value]="typeContrat">{{ 'opportunitesApp.TypeContrat.' + typeContrat | translate }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_domaine" jhiTranslate="opportunitesApp.opportunite.domaine">Domaine</label>
+          <select
+            class="form-control"
+            id="field_domaine"
+            data-cy="domaine"
+            name="domaine"
+            formControlName="domaine"
+            [compareWith]="compareDomaine"
+          >
+            <option [ngValue]="null"></option>
+            @for (domaineOption of domainesSharedCollection; track $index) {
+              <option [ngValue]="domaineOption">{{ domaineOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_organisation" jhiTranslate="opportunitesApp.opportunite.organisation">Organisation</label>
+          <select
+            class="form-control"
+            id="field_organisation"
+            data-cy="organisation"
+            name="organisation"
+            formControlName="organisation"
+            [compareWith]="compareOrganisation"
+          >
+            <option [ngValue]="null"></option>
+            @for (organisationOption of organisationsSharedCollection; track $index) {
+              <option [ngValue]="organisationOption">{{ organisationOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_ville" jhiTranslate="opportunitesApp.opportunite.ville">Ville</label>
+          <select class="form-control" id="field_ville" data-cy="ville" name="ville" formControlName="ville" [compareWith]="compareVille">
+            <option [ngValue]="null"></option>
+            @for (villeOption of villesSharedCollection; track $index) {
+              <option [ngValue]="villeOption">{{ villeOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

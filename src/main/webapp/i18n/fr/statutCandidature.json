@@ -1,0 +1,13 @@
+{
+  "opportunitesApp": {
+    "StatutCandidature": {
+      "null": "",
+      "EN_ATTENTE_VALIDATION_ADMIN": "EN_ATTENTE_VALIDATION_ADMIN",
+      "REJETEE_ADMIN": "REJETEE_ADMIN",
+      "VALIDEE_ADMIN": "VALIDEE_ADMIN",
+      "VUE_RECRUTEUR": "VUE_RECRUTEUR",
+      "ACCEPTEE_RECRUTEUR": "ACCEPTEE_RECRUTEUR",
+      "REFUSEE_RECRUTEUR": "REFUSEE_RECRUTEUR"
+    }
+  }
+}

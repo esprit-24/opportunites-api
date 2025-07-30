@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (recruteur(); as recruteurRef) {
+      <div>
+        <h2 data-cy="recruteurDetailsHeading"><span jhiTranslate="opportunitesApp.recruteur.detail.title">Recruteur</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ recruteurRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.recruteur.titreProfessionnel">Titre Professionnel</span></dt>
+          <dd>
+            <span>{{ recruteurRef.titreProfessionnel }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.recruteur.biographie">Biographie</span></dt>
+          <dd>
+            <span>{{ recruteurRef.biographie }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.recruteur.user">User</span></dt>
+          <dd>
+            <span>{{ recruteurRef.user?.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="opportunitesApp.recruteur.organisation">Organisation</span></dt>
+          <dd>
+            @if (recruteur()!.organisation) {
+              <div>
+                <a [routerLink]="['/organisation', recruteur()!.organisation?.id, 'view']">{{ recruteurRef.organisation?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/recruteur', recruteurRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

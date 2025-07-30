@@ -1,0 +1,80 @@
+{
+  "annotations": {
+    "changelogDate": "20250730110909"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "titre",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "TextBlob",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dateDebut",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dateFin",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "adresse",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "niveauEtudeRequis",
+      "fieldType": "NiveauEtude",
+      "fieldValues": "CFEE,BFEM,BAC,LICENCE,MASTER,DOCTORAT"
+    },
+    {
+      "fieldName": "nombrePostes",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "salaire",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "statut",
+      "fieldType": "Statut",
+      "fieldValues": "ACTIVE,EXPIREE,POURVUE"
+    },
+    {
+      "fieldName": "typeContrat",
+      "fieldType": "TypeContrat",
+      "fieldValues": "CDI,CDD,STAGE,FREELANCE,ALTERNANCE,THESE"
+    }
+  ],
+  "name": "Opportunite",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "domaine",
+      "relationshipName": "domaine",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "organisation",
+      "relationshipName": "organisation",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "ville",
+      "relationshipName": "ville",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

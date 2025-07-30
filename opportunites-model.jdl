@@ -1,0 +1,133 @@
+
+
+enum NiveauEtude {
+    // Niveaux d'études possibles pour un candidat ou une opportunité
+    CFEE, BFEM, BAC, LICENCE, MASTER, DOCTORAT
+}
+
+enum TypeContrat {
+    // Types de contrat possibles pour une opportunité
+    CDI,
+    CDD,
+    STAGE,
+    FREELANCE,
+    ALTERNANCE,
+    THESE
+}
+
+enum StatutCandidature {
+    // Statuts possibles d'une candidature
+    EN_ATTENTE_VALIDATION_ADMIN,
+    REJETEE_ADMIN,
+    VALIDEE_ADMIN,
+    VUE_RECRUTEUR,
+    ACCEPTEE_RECRUTEUR,
+    REFUSEE_RECRUTEUR
+}
+
+enum Statut {
+    // Statuts possibles d'une opportunité
+    ACTIVE,
+    EXPIREE,
+    POURVUE
+}
+
+entity Profil {
+    // Profil professionnel d'un candidat (ex: développeur, designer...)
+    intitule String required
+}
+
+entity Domaine {
+    // Domaine d'activité (ex: informatique, finance...)
+    intitule String required
+    description TextBlob required
+}
+
+entity Region {
+    // Région géographique
+    nom String required
+}
+
+entity Departement {
+    // Département géographique
+    nom String required
+}
+
+entity Ville {
+    // Ville géographique
+    nom String required
+}
+
+entity Organisation {
+    // Organisation ou entreprise proposant des opportunités
+    nom String required
+    presentation TextBlob required
+    secteurActivite String
+    logoUrl String
+    adresse String required
+    siteWeb String
+    emailContact String required
+    telephone String
+}
+
+entity Candidat {
+    // Informations sur un candidat
+    dateNaissance Instant
+    niveauEtude NiveauEtude required
+    cvUrl String
+    statutActuel String
+}
+
+entity Recruteur {
+    // Informations sur un recruteur
+    titreProfessionnel String
+    biographie TextBlob
+}
+
+entity Opportunite {
+    // Opportunité proposée par une organisation
+    titre String required
+    description TextBlob required
+    dateDebut Instant required
+    dateFin Instant
+    adresse String
+    niveauEtudeRequis NiveauEtude
+    nombrePostes Integer required
+    salaire BigDecimal
+    statut Statut
+    typeContrat TypeContrat
+}
+
+entity Candidature {
+    // Candidature d'un candidat à une opportunité
+    datePostulation Instant required
+    statutCandidature StatutCandidature
+    lettreMotivation TextBlob
+}
+
+relationship OneToOne {
+    // Relations 1-1
+    Candidat to @OnDelete("CASCADE") @Id User with builtInEntity
+    Recruteur to @OnDelete("CASCADE") @Id User with builtInEntity
+}
+
+relationship ManyToOne {
+    // Relations plusieurs-à-un
+    Candidat{profil} to Profil
+    Candidat{domaine} to Domaine
+    Profil{domaine} to Domaine
+    Candidature{opportunite} to Opportunite
+    Candidature{candidat} to Candidat
+    Opportunite{domaine} to Domaine
+    Opportunite{organisation} to Organisation
+    Opportunite{ville} to Ville
+    Organisation{ville} to Ville
+    Recruteur{organisation} to Organisation
+    Ville{departement} to Departement
+    Departement{region} to Region
+}
+
+// Génération automatique de DTO, services et pagination pour toutes les entités
+dto * with mapstruct
+service * with serviceClass
+paginate * with pagination

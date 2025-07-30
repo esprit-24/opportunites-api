@@ -1,0 +1,228 @@
+<div>
+  <h2 id="page-heading" data-cy="OpportuniteHeading">
+    <span jhiTranslate="opportunitesApp.opportunite.home.title">Opportunites</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span jhiTranslate="opportunitesApp.opportunite.home.refreshListLabel">Actualiser la liste</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-opportunite"
+        [routerLink]="['/opportunite/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="opportunitesApp.opportunite.home.createLabel">Créer un nouveau Opportunite</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error />
+
+  <jhi-alert />
+
+  @if (opportunites().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="opportunitesApp.opportunite.home.notFound">Aucun Opportunite trouvé</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="titre">
+              <div class="d-flex">
+                <span jhiTranslate="opportunitesApp.opportunite.titre">Titre</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="description">
+              <div class="d-flex">
+                <span jhiTranslate="opportunitesApp.opportunite.description">Description</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateDebut">
+              <div class="d-flex">
+                <span jhiTranslate="opportunitesApp.opportunite.dateDebut">Date Debut</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateFin">
+              <div class="d-flex">
+                <span jhiTranslate="opportunitesApp.opportunite.dateFin">Date Fin</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="adresse">
+              <div class="d-flex">
+                <span jhiTranslate="opportunitesApp.opportunite.adresse">Adresse</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="niveauEtudeRequis">
+              <div class="d-flex">
+                <span jhiTranslate="opportunitesApp.opportunite.niveauEtudeRequis">Niveau Etude Requis</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="nombrePostes">
+              <div class="d-flex">
+                <span jhiTranslate="opportunitesApp.opportunite.nombrePostes">Nombre Postes</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="salaire">
+              <div class="d-flex">
+                <span jhiTranslate="opportunitesApp.opportunite.salaire">Salaire</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="statut">
+              <div class="d-flex">
+                <span jhiTranslate="opportunitesApp.opportunite.statut">Statut</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="typeContrat">
+              <div class="d-flex">
+                <span jhiTranslate="opportunitesApp.opportunite.typeContrat">Type Contrat</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="domaine.id">
+              <div class="d-flex">
+                <span jhiTranslate="opportunitesApp.opportunite.domaine">Domaine</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="organisation.id">
+              <div class="d-flex">
+                <span jhiTranslate="opportunitesApp.opportunite.organisation">Organisation</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="ville.id">
+              <div class="d-flex">
+                <span jhiTranslate="opportunitesApp.opportunite.ville">Ville</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (opportunite of opportunites(); track trackId(opportunite)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/opportunite', opportunite.id, 'view']">{{ opportunite.id }}</a>
+              </td>
+              <td>{{ opportunite.titre }}</td>
+              <td>{{ opportunite.description }}</td>
+              <td>{{ opportunite.dateDebut | formatMediumDatetime }}</td>
+              <td>{{ opportunite.dateFin | formatMediumDatetime }}</td>
+              <td>{{ opportunite.adresse }}</td>
+              <td [jhiTranslate]="'opportunitesApp.NiveauEtude.' + (opportunite.niveauEtudeRequis ?? 'null')">
+                {{
+                  { null: '', CFEE: 'CFEE', BFEM: 'BFEM', BAC: 'BAC', LICENCE: 'LICENCE', MASTER: 'MASTER', DOCTORAT: 'DOCTORAT' }[
+                    opportunite.niveauEtudeRequis ?? 'null'
+                  ]
+                }}
+              </td>
+              <td>{{ opportunite.nombrePostes }}</td>
+              <td>{{ opportunite.salaire }}</td>
+              <td [jhiTranslate]="'opportunitesApp.Statut.' + (opportunite.statut ?? 'null')">
+                {{ { null: '', ACTIVE: 'ACTIVE', EXPIREE: 'EXPIREE', POURVUE: 'POURVUE' }[opportunite.statut ?? 'null'] }}
+              </td>
+              <td [jhiTranslate]="'opportunitesApp.TypeContrat.' + (opportunite.typeContrat ?? 'null')">
+                {{
+                  { null: '', CDI: 'CDI', CDD: 'CDD', STAGE: 'STAGE', FREELANCE: 'FREELANCE', ALTERNANCE: 'ALTERNANCE', THESE: 'THESE' }[
+                    opportunite.typeContrat ?? 'null'
+                  ]
+                }}
+              </td>
+              <td>
+                @if (opportunite.domaine) {
+                  <div>
+                    <a [routerLink]="['/domaine', opportunite.domaine.id, 'view']">{{ opportunite.domaine.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (opportunite.organisation) {
+                  <div>
+                    <a [routerLink]="['/organisation', opportunite.organisation.id, 'view']">{{ opportunite.organisation.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (opportunite.ville) {
+                  <div>
+                    <a [routerLink]="['/ville', opportunite.ville.id, 'view']">{{ opportunite.ville.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/opportunite', opportunite.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Voir</span>
+                  </a>
+
+                  <a [routerLink]="['/opportunite', opportunite.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editer</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(opportunite)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Supprimer</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (opportunites().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page, totalItems, itemsPerPage }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>
