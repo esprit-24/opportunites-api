@@ -47,14 +47,6 @@
               </div>
             }
           </dd>
-          <dt><span jhiTranslate="opportunitesApp.candidat.domaine">Domaine</span></dt>
-          <dd>
-            @if (candidat()!.domaine) {
-              <div>
-                <a [routerLink]="['/domaine', candidat()!.domaine?.id, 'view']">{{ candidatRef.domaine?.id }}</a>
-              </div>
-            }
-          </dd>
         </dl>
 
         <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

@@ -114,7 +114,6 @@ relationship OneToOne {
 relationship ManyToOne {
     // Relations plusieurs-à-un
     Candidat{profil} to Profil
-    Candidat{domaine} to Domaine
     Profil{domaine} to Domaine
     Candidature{opportunite} to Opportunite
     Candidature{candidat} to Candidat

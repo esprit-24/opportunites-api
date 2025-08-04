@@ -27,8 +27,6 @@ public class CandidatDTO implements Serializable {
 
     private ProfilDTO profil;
 
-    private DomaineDTO domaine;
-
     public Long getId() {
         return id;
     }
@@ -85,14 +83,6 @@ public class CandidatDTO implements Serializable {
         this.profil = profil;
     }
 
-    public DomaineDTO getDomaine() {
-        return domaine;
-    }
-
-    public void setDomaine(DomaineDTO domaine) {
-        this.domaine = domaine;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -125,7 +115,6 @@ public class CandidatDTO implements Serializable {
             ", statutActuel='" + getStatutActuel() + "'" +
             ", user=" + getUser() +
             ", profil=" + getProfil() +
-            ", domaine=" + getDomaine() +
             "}";
     }
 }

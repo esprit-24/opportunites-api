@@ -37,7 +37,6 @@ type CandidatFormGroupContent = {
   statutActuel: FormControl<CandidatFormRawValue['statutActuel']>;
   user: FormControl<CandidatFormRawValue['user']>;
   profil: FormControl<CandidatFormRawValue['profil']>;
-  domaine: FormControl<CandidatFormRawValue['domaine']>;
 };
 
 export type CandidatFormGroup = FormGroup<CandidatFormGroupContent>;
@@ -65,7 +64,6 @@ export class CandidatFormService {
       statutActuel: new FormControl(candidatRawValue.statutActuel),
       user: new FormControl(candidatRawValue.user),
       profil: new FormControl(candidatRawValue.profil),
-      domaine: new FormControl(candidatRawValue.domaine),
     });
   }
 

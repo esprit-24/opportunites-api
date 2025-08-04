@@ -91,23 +91,6 @@
             }
           </select>
         </div>
-
-        <div class="mb-3">
-          <label class="form-label" for="field_domaine" jhiTranslate="opportunitesApp.candidat.domaine">Domaine</label>
-          <select
-            class="form-control"
-            id="field_domaine"
-            data-cy="domaine"
-            name="domaine"
-            formControlName="domaine"
-            [compareWith]="compareDomaine"
-          >
-            <option [ngValue]="null"></option>
-            @for (domaineOption of domainesSharedCollection; track $index) {
-              <option [ngValue]="domaineOption">{{ domaineOption.id }}</option>
-            }
-          </select>
-        </div>
       </div>
 
       <div>

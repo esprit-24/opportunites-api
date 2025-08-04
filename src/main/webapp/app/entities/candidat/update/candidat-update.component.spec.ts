@@ -8,8 +8,6 @@ import { IUser } from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/service/user.service';
 import { IProfil } from 'app/entities/profil/profil.model';
 import { ProfilService } from 'app/entities/profil/service/profil.service';
-import { IDomaine } from 'app/entities/domaine/domaine.model';
-import { DomaineService } from 'app/entities/domaine/service/domaine.service';
 import { ICandidat } from '../candidat.model';
 import { CandidatService } from '../service/candidat.service';
 import { CandidatFormService } from './candidat-form.service';
@@ -24,7 +22,6 @@ describe('Candidat Management Update Component', () => {
   let candidatService: CandidatService;
   let userService: UserService;
   let profilService: ProfilService;
-  let domaineService: DomaineService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -49,7 +46,6 @@ describe('Candidat Management Update Component', () => {
     candidatService = TestBed.inject(CandidatService);
     userService = TestBed.inject(UserService);
     profilService = TestBed.inject(ProfilService);
-    domaineService = TestBed.inject(DomaineService);
 
     comp = fixture.componentInstance;
   });
@@ -99,43 +95,18 @@ describe('Candidat Management Update Component', () => {
       expect(comp.profilsSharedCollection).toEqual(expectedCollection);
     });
 
-    it('should call Domaine query and add missing value', () => {
-      const candidat: ICandidat = { id: 13667 };
-      const domaine: IDomaine = { id: 14497 };
-      candidat.domaine = domaine;
-
-      const domaineCollection: IDomaine[] = [{ id: 14497 }];
-      jest.spyOn(domaineService, 'query').mockReturnValue(of(new HttpResponse({ body: domaineCollection })));
-      const additionalDomaines = [domaine];
-      const expectedCollection: IDomaine[] = [...additionalDomaines, ...domaineCollection];
-      jest.spyOn(domaineService, 'addDomaineToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ candidat });
-      comp.ngOnInit();
-
-      expect(domaineService.query).toHaveBeenCalled();
-      expect(domaineService.addDomaineToCollectionIfMissing).toHaveBeenCalledWith(
-        domaineCollection,
-        ...additionalDomaines.map(expect.objectContaining),
-      );
-      expect(comp.domainesSharedCollection).toEqual(expectedCollection);
-    });
-
     it('should update editForm', () => {
       const candidat: ICandidat = { id: 13667 };
       const user: IUser = { id: 3944 };
       candidat.user = user;
       const profil: IProfil = { id: 12279 };
       candidat.profil = profil;
-      const domaine: IDomaine = { id: 14497 };
-      candidat.domaine = domaine;
 
       activatedRoute.data = of({ candidat });
       comp.ngOnInit();
 
       expect(comp.usersSharedCollection).toContainEqual(user);
       expect(comp.profilsSharedCollection).toContainEqual(profil);
-      expect(comp.domainesSharedCollection).toContainEqual(domaine);
       expect(comp.candidat).toEqual(candidat);
     });
   });
@@ -226,16 +197,6 @@ describe('Candidat Management Update Component', () => {
         jest.spyOn(profilService, 'compareProfil');
         comp.compareProfil(entity, entity2);
         expect(profilService.compareProfil).toHaveBeenCalledWith(entity, entity2);
-      });
-    });
-
-    describe('compareDomaine', () => {
-      it('should forward to domaineService', () => {
-        const entity = { id: 14497 };
-        const entity2 = { id: 24380 };
-        jest.spyOn(domaineService, 'compareDomaine');
-        comp.compareDomaine(entity, entity2);
-        expect(domaineService.compareDomaine).toHaveBeenCalledWith(entity, entity2);
       });
     });
   });

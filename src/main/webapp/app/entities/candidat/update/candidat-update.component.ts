@@ -11,8 +11,6 @@ import { IUser } from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/service/user.service';
 import { IProfil } from 'app/entities/profil/profil.model';
 import { ProfilService } from 'app/entities/profil/service/profil.service';
-import { IDomaine } from 'app/entities/domaine/domaine.model';
-import { DomaineService } from 'app/entities/domaine/service/domaine.service';
 import { NiveauEtude } from 'app/entities/enumerations/niveau-etude.model';
 import { CandidatService } from '../service/candidat.service';
 import { ICandidat } from '../candidat.model';
@@ -30,13 +28,11 @@ export class CandidatUpdateComponent implements OnInit {
 
   usersSharedCollection: IUser[] = [];
   profilsSharedCollection: IProfil[] = [];
-  domainesSharedCollection: IDomaine[] = [];
 
   protected candidatService = inject(CandidatService);
   protected candidatFormService = inject(CandidatFormService);
   protected userService = inject(UserService);
   protected profilService = inject(ProfilService);
-  protected domaineService = inject(DomaineService);
   protected activatedRoute = inject(ActivatedRoute);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -45,8 +41,6 @@ export class CandidatUpdateComponent implements OnInit {
   compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
 
   compareProfil = (o1: IProfil | null, o2: IProfil | null): boolean => this.profilService.compareProfil(o1, o2);
-
-  compareDomaine = (o1: IDomaine | null, o2: IDomaine | null): boolean => this.domaineService.compareDomaine(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ candidat }) => {
@@ -101,10 +95,6 @@ export class CandidatUpdateComponent implements OnInit {
       this.profilsSharedCollection,
       candidat.profil,
     );
-    this.domainesSharedCollection = this.domaineService.addDomaineToCollectionIfMissing<IDomaine>(
-      this.domainesSharedCollection,
-      candidat.domaine,
-    );
   }
 
   protected loadRelationshipsOptions(): void {
@@ -119,11 +109,5 @@ export class CandidatUpdateComponent implements OnInit {
       .pipe(map((res: HttpResponse<IProfil[]>) => res.body ?? []))
       .pipe(map((profils: IProfil[]) => this.profilService.addProfilToCollectionIfMissing<IProfil>(profils, this.candidat?.profil)))
       .subscribe((profils: IProfil[]) => (this.profilsSharedCollection = profils));
-
-    this.domaineService
-      .query()
-      .pipe(map((res: HttpResponse<IDomaine[]>) => res.body ?? []))
-      .pipe(map((domaines: IDomaine[]) => this.domaineService.addDomaineToCollectionIfMissing<IDomaine>(domaines, this.candidat?.domaine)))
-      .subscribe((domaines: IDomaine[]) => (this.domainesSharedCollection = domaines));
   }
 }

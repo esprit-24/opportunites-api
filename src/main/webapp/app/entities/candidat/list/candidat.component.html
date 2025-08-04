@@ -80,12 +80,6 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="domaine.id">
-              <div class="d-flex">
-                <span jhiTranslate="opportunitesApp.candidat.domaine">Domaine</span>
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -112,13 +106,6 @@
                 @if (candidat.profil) {
                   <div>
                     <a [routerLink]="['/profil', candidat.profil.id, 'view']">{{ candidat.profil.id }}</a>
-                  </div>
-                }
-              </td>
-              <td>
-                @if (candidat.domaine) {
-                  <div>
-                    <a [routerLink]="['/domaine', candidat.domaine.id, 'view']">{{ candidat.domaine.id }}</a>
                   </div>
                 }
               </td>

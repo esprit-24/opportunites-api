@@ -47,9 +47,6 @@ public class Candidat implements Serializable {
     @JsonIgnoreProperties(value = { "domaine" }, allowSetters = true)
     private Profil profil;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Domaine domaine;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -140,19 +137,6 @@ public class Candidat implements Serializable {
 
     public Candidat profil(Profil profil) {
         this.setProfil(profil);
-        return this;
-    }
-
-    public Domaine getDomaine() {
-        return this.domaine;
-    }
-
-    public void setDomaine(Domaine domaine) {
-        this.domaine = domaine;
-    }
-
-    public Candidat domaine(Domaine domaine) {
-        this.setDomaine(domaine);
         return this;
     }
 

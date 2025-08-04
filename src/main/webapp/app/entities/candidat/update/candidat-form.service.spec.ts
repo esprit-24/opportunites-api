@@ -26,7 +26,6 @@ describe('Candidat Form Service', () => {
             statutActuel: expect.any(Object),
             user: expect.any(Object),
             profil: expect.any(Object),
-            domaine: expect.any(Object),
           }),
         );
       });
@@ -43,7 +42,6 @@ describe('Candidat Form Service', () => {
             statutActuel: expect.any(Object),
             user: expect.any(Object),
             profil: expect.any(Object),
-            domaine: expect.any(Object),
           }),
         );
       });

@@ -43,7 +43,7 @@ public class Candidature implements Serializable {
     private Opportunite opportunite;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "user", "profil", "domaine" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user", "profil" }, allowSetters = true)
     private Candidat candidat;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

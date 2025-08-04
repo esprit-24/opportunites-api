@@ -73,7 +73,6 @@ public class CandidatAsserts {
     public static void assertCandidatUpdatableRelationshipsEquals(Candidat expected, Candidat actual) {
         assertThat(actual)
             .as("Verify Candidat relationships")
-            .satisfies(a -> assertThat(a.getProfil()).as("check profil").isEqualTo(expected.getProfil()))
-            .satisfies(a -> assertThat(a.getDomaine()).as("check domaine").isEqualTo(expected.getDomaine()));
+            .satisfies(a -> assertThat(a.getProfil()).as("check profil").isEqualTo(expected.getProfil()));
     }
 }

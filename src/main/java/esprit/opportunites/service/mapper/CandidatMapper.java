@@ -1,11 +1,9 @@
 package esprit.opportunites.service.mapper;
 
 import esprit.opportunites.domain.Candidat;
-import esprit.opportunites.domain.Domaine;
 import esprit.opportunites.domain.Profil;
 import esprit.opportunites.domain.User;
 import esprit.opportunites.service.dto.CandidatDTO;
-import esprit.opportunites.service.dto.DomaineDTO;
 import esprit.opportunites.service.dto.ProfilDTO;
 import esprit.opportunites.service.dto.UserDTO;
 import org.mapstruct.*;
@@ -17,7 +15,6 @@ import org.mapstruct.*;
 public interface CandidatMapper extends EntityMapper<CandidatDTO, Candidat> {
     @Mapping(target = "user", source = "user", qualifiedByName = "userId")
     @Mapping(target = "profil", source = "profil", qualifiedByName = "profilId")
-    @Mapping(target = "domaine", source = "domaine", qualifiedByName = "domaineId")
     CandidatDTO toDto(Candidat s);
 
     @Named("userId")
@@ -29,9 +26,4 @@ public interface CandidatMapper extends EntityMapper<CandidatDTO, Candidat> {
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     ProfilDTO toDtoProfilId(Profil profil);
-
-    @Named("domaineId")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
-    DomaineDTO toDtoDomaineId(Domaine domaine);
 }

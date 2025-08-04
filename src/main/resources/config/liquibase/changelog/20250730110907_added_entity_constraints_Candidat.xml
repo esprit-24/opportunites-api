@@ -24,12 +24,5 @@
                                  referencedColumnNames="id"
                                  referencedTableName="profil"
                                  />
-
-        <addForeignKeyConstraint baseColumnNames="domaine_id"
-                                 baseTableName="candidat"
-                                 constraintName="fk_candidat__domaine_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="domaine"
-                                 />
     </changeSet>
 </databaseChangeLog>

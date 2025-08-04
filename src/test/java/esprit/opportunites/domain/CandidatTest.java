@@ -1,7 +1,6 @@
 package esprit.opportunites.domain;
 
 import static esprit.opportunites.domain.CandidatTestSamples.*;
-import static esprit.opportunites.domain.DomaineTestSamples.*;
 import static esprit.opportunites.domain.ProfilTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -34,17 +33,5 @@ class CandidatTest {
 
         candidat.profil(null);
         assertThat(candidat.getProfil()).isNull();
-    }
-
-    @Test
-    void domaineTest() {
-        Candidat candidat = getCandidatRandomSampleGenerator();
-        Domaine domaineBack = getDomaineRandomSampleGenerator();
-
-        candidat.setDomaine(domaineBack);
-        assertThat(candidat.getDomaine()).isEqualTo(domaineBack);
-
-        candidat.domaine(null);
-        assertThat(candidat.getDomaine()).isNull();
     }
 }
