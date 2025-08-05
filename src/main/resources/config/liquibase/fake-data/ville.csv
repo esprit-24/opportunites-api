@@ -1,11 +1,21 @@
-id;nom
-1;à l'encontre de ouin
-2;cuicui
-3;habile souple au-dehors
-4;dynamique quelquefois quasiment
-5;hôte dévoiler vraisemblablement
-6;promener sans que quand ?
-7;apte à bas de
-8;de crainte que ouille ici
-9;ha basculer
-10;meubler
+id;nom;departement_id
+1;Dakar;1
+2;Guédiawaye;2
+3;Pikine;3
+4;Rufisque;4
+5;Diourbel;5
+6;Bambey;6
+7;Touba;7
+8;Fatick;8
+9;Foundiougne;9
+10;Gossas;10
+11;Kaffrine;11
+12;Birkilane;12
+13;Kaolack;13
+14;Nioro du Rip;14
+15;Kédougou;15
+16;Salémata;16
+17;Kolda;17
+18;Velingara;18
+19;Louga;19
+20;Linguère;20

@@ -27,8 +27,8 @@ public class Domaine implements Serializable {
     @Column(name = "intitule", nullable = false)
     private String intitule;
 
-    @Lob
-    @Column(name = "description", nullable = false)
+    @NotNull
+    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

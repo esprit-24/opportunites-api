@@ -1,11 +1,11 @@
-id;nom;presentation;secteur_activite;logo_url;adresse;site_web;email_contact;telephone
-1;lentement orange pendant que;../fake-data/blob/hipster.txt;mélancolique lors de;responsable;agir;commissionnaire comme;concurrence coin-coin;0560131042
-2;recta;../fake-data/blob/hipster.txt;malade pour que aujourd'hui;fonctionner pff vu que;rudement parlementaire;miam planquer venir;équilibrer;+33 270263604
-3;chef;../fake-data/blob/hipster.txt;restaurer toujours;naguère approximativement tout;autour de;à raison de d’autant que;parce que remettre;+33 384445677
-4;guide plier;../fake-data/blob/hipster.txt;garantir effectuer;dedans lancer;occuper;affable broum loin;vu que;+33 401142219
-5;à la merci bien que préférer;../fake-data/blob/hipster.txt;serviable hi;personnel collègue;cadre pour que toc-toc;depuis;à l'encontre de même si;0658743073
-6;adversaire;../fake-data/blob/hipster.txt;étrangler;mince semer ding;rentrer;trop derrière ensemble;féliciter athlète;0342937254
-7;totalement là-haut inscrire;../fake-data/blob/hipster.txt;magenta;à la merci porte-parole travailler;près;membre du personnel incognito;incognito;0633123112
-8;à côté de hors de;../fake-data/blob/hipster.txt;bè selon;bzzz;raide;malade;hi au-dessous de;0329484638
-9;sitôt que puisque;../fake-data/blob/hipster.txt;autour de toujours chef de cuisine;miaou;aujourd'hui;jamais tant à peine;vouh jeune enfant badaboum;0109331302
-10;du moment que tard prout;../fake-data/blob/hipster.txt;diététiste;infime adepte;de;extatique;mélancolique que;+33 184238601
+id;nom;presentation;secteur_activite;logo_url;adresse;site_web;email_contact;telephone;ville_id
+1;Université Cheikh Anta Diop;Grande université publique sénégalaise formant des milliers d'étudiants chaque année.;Enseignement supérieur;https://ucad.sn/logo.png;Avenue Cheikh Anta Diop, Dakar;https://www.ucad.sn;contact@ucad.sn;+221338250600;1
+2;Sonatel;Opérateur historique des télécommunications au Sénégal, filiale d'Orange.;Télécommunications;https://www.sonatel.sn/logo.png;46 Boulevard de la République, Dakar;https://www.sonatel.sn;infos@sonatel.sn;+221339399000;1
+3;Université Gaston Berger;Deuxième grande université publique du Sénégal, basée à Saint-Louis.;Enseignement supérieur;https://ugb.sn/logo.png;Sanar, Saint-Louis;https://www.ugb.sn;contact@ugb.sn;+221339610000;10
+4;CBAO Groupe Attijariwafa Bank;Banque commerciale majeure au Sénégal, filiale du groupe marocain.;Banque;https://www.cbao.sn/logo.png;Avenue Lamine Guèye, Dakar;https://www.cbao.sn;serviceclient@cbao.sn;+221338498000;1
+5;Supdeco Dakar;École supérieure privée de commerce et de gestion.;Éducation privée;https://www.supdeco.sn/logo.png;Sacré-Cœur 3, VDN, Dakar;https://www.supdeco.sn;admissions@supdeco.sn;+221338698000;1
+6;Société Africaine de Raffinage (SAR);Raffinerie pétrolière nationale située à Mbao.;Énergie;https://www.sar.sn/logo.png;Zone industrielle de Mbao, Dakar;https://www.sar.sn;contact@sar.sn;+221338382000;3
+7;Université Assane Seck de Ziguinchor;Université publique dans le sud du Sénégal.;Enseignement supérieur;https://uasz.sn/logo.png;BP 523 Ziguinchor;https://www.uasz.sn;contact@uasz.sn;+221339913300;20
+8;Société Nationale des Eaux du Sénégal (SONES);Société chargée de la production et de la distribution d'eau.;Hydraulique;https://www.sones.sn/logo.png;Rue Carnot x Amadou Assane Ndoye, Dakar;https://www.sones.sn;infos@sones.sn;+221338899900;1
+9;Université Alioune Diop de Bambey;Université publique spécialisée en science, technologie et développement.;Enseignement supérieur;https://uadb.edu.sn/logo.png;Bambey, Diourbel;https://www.uadb.edu.sn;contact@uadb.edu.sn;+221339671700;6
+10;Société Générale Sénégal;Institution bancaire internationale opérant au Sénégal.;Banque;https://www.sg.sn/logo.png;19 Avenue Léopold Sédar Senghor, Dakar;https://www.sg.sn;serviceclient@sg.sn;+221338398000;1

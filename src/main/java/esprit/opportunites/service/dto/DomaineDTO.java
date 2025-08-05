@@ -1,14 +1,9 @@
 package esprit.opportunites.service.dto;
 
-import jakarta.persistence.Lob;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
-/**
- * A DTO for the {@link esprit.opportunites.domain.Domaine} entity.
- */
-@SuppressWarnings("common-java:DuplicatedBlocks")
 public class DomaineDTO implements Serializable {
 
     private Long id;
@@ -16,8 +11,9 @@ public class DomaineDTO implements Serializable {
     @NotNull
     private String intitule;
 
-    @Lob
     private String description;
+
+    // Getters et setters
 
     public Long getId() {
         return id;
@@ -43,34 +39,18 @@ public class DomaineDTO implements Serializable {
         this.description = description;
     }
 
+    // equals et hashCode sur id
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof DomaineDTO)) {
-            return false;
-        }
-
-        DomaineDTO domaineDTO = (DomaineDTO) o;
-        if (this.id == null) {
-            return false;
-        }
-        return Objects.equals(this.id, domaineDTO.id);
+        if (this == o) return true;
+        if (!(o instanceof DomaineDTO)) return false;
+        DomaineDTO that = (DomaineDTO) o;
+        return id != null && id.equals(that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.id);
-    }
-
-    // prettier-ignore
-    @Override
-    public String toString() {
-        return "DomaineDTO{" +
-            "id=" + getId() +
-            ", intitule='" + getIntitule() + "'" +
-            ", description='" + getDescription() + "'" +
-            "}";
+        return Objects.hash(id);
     }
 }

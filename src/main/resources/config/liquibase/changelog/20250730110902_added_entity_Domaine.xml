@@ -17,7 +17,7 @@
             <column name="intitule" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="description" type="${clobType}">
+            <column name="description" type="text">
                 <constraints nullable="false" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
@@ -36,13 +36,13 @@
     -->
     <changeSet id="20250730110902-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/fake-data/domaine.csv"
-                  separator=";"
-                  tableName="domaine"
-                  usePreparedStatements="true">
+                    file="config/liquibase/fake-data/domaine.csv"
+                    separator=";"
+                    tableName="domaine"
+                    usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="intitule" type="string"/>
-            <column name="description" type="clob"/>
+            <column name="description" type="text"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

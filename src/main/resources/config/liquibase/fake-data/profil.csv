@@ -1,11 +1,21 @@
-id;intitule
-1;quitte à brave vérifier
-2;rechercher énorme
-3;rédaction sans
-4;patientèle guide carrément
-5;hystérique si ouch
-6;paf percevoir recouvrir
-7;avouer
-8;crever
-9;peut-être juriste splendide
-10;oups
+id;intitule;domaine_id
+1;Développeur web;1
+2;Administrateur système;1
+3;Médecin généraliste;2
+4;Chirurgien;2
+5;Avocat;3
+6;Notaire;3
+7;Économiste;4
+8;Analyste financier;4
+9;Chef de projet;5
+10;Comptable;5
+11;Agronome;6
+12;Technicien agricole;6
+13;Électronicien;7
+14;Ingénieur en télécoms;7
+15;Ingénieur en BTP;8
+16;Conducteur de travaux;8
+17;Journaliste;9
+18;Chargé de communication;9
+19;Contrôleur de gestion;10
+20;Conseiller bancaire;10
