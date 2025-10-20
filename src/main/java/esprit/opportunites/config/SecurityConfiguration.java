@@ -74,6 +74,8 @@ public class SecurityConfiguration {
                     .requestMatchers(mvc.pattern("/management/**")).hasAuthority(AuthoritiesConstants.ADMIN)
                     .requestMatchers(mvc.pattern(HttpMethod.GET,  "/api/domaines/**")).permitAll()
                     .requestMatchers(mvc.pattern("/api/domaines/**")).hasAuthority(AuthoritiesConstants.ADMIN)
+                    .requestMatchers(mvc.pattern(HttpMethod.GET,  "/api/regions/**")).permitAll()
+                    .requestMatchers(mvc.pattern("/api/regions/**")).hasAuthority(AuthoritiesConstants.ADMIN)
                     .requestMatchers(mvc.pattern(HttpMethod.GET,  "/api/villes/**")).permitAll()
                     .requestMatchers(mvc.pattern("/api/villes/**")).hasAuthority(AuthoritiesConstants.ADMIN)
                     .requestMatchers(mvc.pattern(HttpMethod.GET,  "/api/profils/**")).permitAll()
