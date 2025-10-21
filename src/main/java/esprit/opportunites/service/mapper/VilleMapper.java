@@ -16,6 +16,6 @@ public interface VilleMapper extends EntityMapper<VilleDTO, Ville> {
 
     @Named("departementId")
     @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
+    @Mappings({ @Mapping(target = "id", source = "id"), @Mapping(target = "nom", source = "nom") })
     DepartementDTO toDtoDepartementId(Departement departement);
 }

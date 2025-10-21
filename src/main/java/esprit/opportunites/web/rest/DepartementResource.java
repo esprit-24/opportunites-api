@@ -140,17 +140,15 @@ public class DepartementResource {
     }
 
     /**
-     * {@code GET  /departements} : get all the departements.
+     * {@code GET  /departements} : get all the departements (without pagination).
      *
-     * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of departements in body.
      */
     @GetMapping("")
-    public ResponseEntity<List<DepartementDTO>> getAllDepartements(@org.springdoc.core.annotations.ParameterObject Pageable pageable) {
-        LOG.debug("REST request to get a page of Departements");
-        Page<DepartementDTO> page = departementService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public ResponseEntity<List<DepartementDTO>> getAllDepartements() {
+        LOG.debug("REST request to get all Departements (no pagination)");
+        List<DepartementDTO> departements = departementService.findAll();
+        return ResponseEntity.ok().body(departements);
     }
 
     /**

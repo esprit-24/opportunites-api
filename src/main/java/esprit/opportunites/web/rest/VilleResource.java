@@ -142,15 +142,11 @@ public class VilleResource {
     /**
      * {@code GET  /villes} : get all the villes.
      *
-     * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of villes in body.
      */
     @GetMapping("")
-    public ResponseEntity<List<VilleDTO>> getAllVilles(@org.springdoc.core.annotations.ParameterObject Pageable pageable) {
-        LOG.debug("REST request to get a page of Villes");
-        Page<VilleDTO> page = villeService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public ResponseEntity<List<VilleDTO>> getAllVilles() {
+        return ResponseEntity.ok(villeService.findAll());
     }
 
     /**

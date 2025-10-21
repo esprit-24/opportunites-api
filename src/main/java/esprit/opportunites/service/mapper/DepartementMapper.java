@@ -16,6 +16,6 @@ public interface DepartementMapper extends EntityMapper<DepartementDTO, Departem
 
     @Named("regionId")
     @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
+    @Mappings({ @Mapping(target = "id", source = "id"), @Mapping(target = "nom", source = "nom") })
     RegionDTO toDtoRegionId(Region region);
 }

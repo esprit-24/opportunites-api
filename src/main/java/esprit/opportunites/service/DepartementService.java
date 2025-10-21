@@ -4,6 +4,7 @@ import esprit.opportunites.domain.Departement;
 import esprit.opportunites.repository.DepartementRepository;
 import esprit.opportunites.service.dto.DepartementDTO;
 import esprit.opportunites.service.mapper.DepartementMapper;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,16 +77,10 @@ public class DepartementService {
             .map(departementMapper::toDto);
     }
 
-    /**
-     * Get all the departements.
-     *
-     * @param pageable the pagination information.
-     * @return the list of entities.
-     */
     @Transactional(readOnly = true)
-    public Page<DepartementDTO> findAll(Pageable pageable) {
-        LOG.debug("Request to get all Departements");
-        return departementRepository.findAll(pageable).map(departementMapper::toDto);
+    public List<DepartementDTO> findAll() {
+        LOG.debug("Request to get all Departements (no pagination)");
+        return departementRepository.findAll().stream().map(departementMapper::toDto).toList();
     }
 
     /**

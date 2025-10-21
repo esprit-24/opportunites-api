@@ -4,6 +4,7 @@ import esprit.opportunites.domain.Ville;
 import esprit.opportunites.repository.VilleRepository;
 import esprit.opportunites.service.dto.VilleDTO;
 import esprit.opportunites.service.mapper.VilleMapper;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,13 +80,10 @@ public class VilleService {
     /**
      * Get all the villes.
      *
-     * @param pageable the pagination information.
-     * @return the list of entities.
      */
     @Transactional(readOnly = true)
-    public Page<VilleDTO> findAll(Pageable pageable) {
-        LOG.debug("Request to get all Villes");
-        return villeRepository.findAll(pageable).map(villeMapper::toDto);
+    public List<VilleDTO> findAll() {
+        return villeRepository.findAll().stream().map(villeMapper::toDto).toList();
     }
 
     /**
