@@ -16,6 +16,6 @@ public interface OrganisationMapper extends EntityMapper<OrganisationDTO, Organi
 
     @Named("villeId")
     @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
+    @Mappings({ @Mapping(target = "id", source = "id"), @Mapping(target = "nom", source = "nom") })
     VilleDTO toDtoVilleId(Ville ville);
 }

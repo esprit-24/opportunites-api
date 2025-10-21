@@ -4,6 +4,7 @@ import esprit.opportunites.domain.Organisation;
 import esprit.opportunites.repository.OrganisationRepository;
 import esprit.opportunites.service.dto.OrganisationDTO;
 import esprit.opportunites.service.mapper.OrganisationMapper;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,13 +80,12 @@ public class OrganisationService {
     /**
      * Get all the organisations.
      *
-     * @param pageable the pagination information.
      * @return the list of entities.
      */
     @Transactional(readOnly = true)
-    public Page<OrganisationDTO> findAll(Pageable pageable) {
+    public List<OrganisationDTO> findAll() {
         LOG.debug("Request to get all Organisations");
-        return organisationRepository.findAll(pageable).map(organisationMapper::toDto);
+        return organisationRepository.findAll().stream().map(organisationMapper::toDto).toList();
     }
 
     /**

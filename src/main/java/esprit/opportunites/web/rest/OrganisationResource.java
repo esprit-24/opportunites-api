@@ -18,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -55,6 +56,7 @@ public class OrganisationResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<OrganisationDTO> createOrganisation(@Valid @RequestBody OrganisationDTO organisationDTO)
         throws URISyntaxException {
         LOG.debug("REST request to save Organisation : {}", organisationDTO);
@@ -78,6 +80,7 @@ public class OrganisationResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<OrganisationDTO> updateOrganisation(
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody OrganisationDTO organisationDTO
@@ -112,6 +115,7 @@ public class OrganisationResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<OrganisationDTO> partialUpdateOrganisation(
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody OrganisationDTO organisationDTO
@@ -138,16 +142,14 @@ public class OrganisationResource {
 
     /**
      * {@code GET  /organisations} : get all the organisations.
-     *
-     * @param pageable the pagination information.
+     *.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of organisations in body.
      */
     @GetMapping("")
-    public ResponseEntity<List<OrganisationDTO>> getAllOrganisations(@org.springdoc.core.annotations.ParameterObject Pageable pageable) {
-        LOG.debug("REST request to get a page of Organisations");
-        Page<OrganisationDTO> page = organisationService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public ResponseEntity<List<OrganisationDTO>> getAllOrganisations() {
+        LOG.debug("REST request to get all Organisations");
+        List<OrganisationDTO> list = organisationService.findAll();
+        return ResponseEntity.ok().body(list);
     }
 
     /**
@@ -170,6 +172,7 @@ public class OrganisationResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteOrganisation(@PathVariable("id") Long id) {
         LOG.debug("REST request to delete Organisation : {}", id);
         organisationService.delete(id);

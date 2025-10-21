@@ -28,7 +28,6 @@ public class Organisation implements Serializable {
     @Column(name = "nom", nullable = false)
     private String nom;
 
-    @Lob
     @Column(name = "presentation", nullable = false)
     private String presentation;
 
