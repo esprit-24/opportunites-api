@@ -4,20 +4,12 @@ import esprit.opportunites.domain.enumeration.NiveauEtude;
 import esprit.opportunites.service.InscriptionCandidatService;
 import esprit.opportunites.service.dto.CandidatDTO;
 import esprit.opportunites.service.dto.RegisterCandidatDTO;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.nio.file.*;
 import java.time.Instant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
@@ -25,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class InscriptionCandidatResource {
 
     private static final Logger log = LoggerFactory.getLogger(InscriptionCandidatResource.class);
-    private static final String UPLOAD_DIR = "uploads/cvs"; // À externaliser dans les properties
+    private static final String UPLOAD_DIR = "uploads/cvs";
 
     private final InscriptionCandidatService inscriptionCandidatService;
 
@@ -38,16 +30,16 @@ public class InscriptionCandidatResource {
         @RequestParam("login") String login,
         @RequestParam("password") String password,
         @RequestParam("email") String email,
-        @RequestParam("firstName") String firstName,
-        @RequestParam("lastName") String lastName,
-        @RequestParam("dateNaissance") String dateNaissance,
-        @RequestParam("niveauEtude") String niveauEtude,
-        @RequestParam("statutActuel") String statutActuel,
-        @RequestParam("cvUrl") MultipartFile cvUrl,
+        @RequestParam(value = "firstName", required = false) String firstName,
+        @RequestParam(value = "lastName", required = false) String lastName,
+        @RequestParam(value = "dateNaissance", required = false) String dateNaissance,
+        @RequestParam(value = "niveauEtude", required = false) String niveauEtude,
+        @RequestParam(value = "statutActuel", required = false) String statutActuel,
+        @RequestParam(value = "cvUrl", required = false) MultipartFile cvUrl,
         @RequestParam("profilId") Long profilId
     ) {
         try {
-            // Validation basique
+            // ✅ Champs essentiels uniquement
             if (
                 login == null ||
                 login.isBlank() ||
@@ -55,33 +47,38 @@ public class InscriptionCandidatResource {
                 password.isBlank() ||
                 email == null ||
                 email.isBlank() ||
-                firstName == null ||
-                firstName.isBlank() ||
-                lastName == null ||
-                lastName.isBlank() ||
-                dateNaissance == null ||
-                dateNaissance.isBlank() ||
-                niveauEtude == null ||
-                niveauEtude.isBlank() ||
-                statutActuel == null ||
-                statutActuel.isBlank() ||
-                profilId == null ||
-                cvUrl == null ||
-                cvUrl.isEmpty()
+                profilId == null
             ) {
-                return ResponseEntity.badRequest().body("Tous les champs sont obligatoires.");
+                return ResponseEntity.badRequest().body("Champs obligatoires manquants : login, password, email, profilId.");
             }
 
-            // 1. Enregistrer le fichier CV sur disque
-            String filename = saveCvFile(cvUrl);
+            // 🔁 Conversion optionnelle de la date
+            Instant dateNaissanceInstant = null;
+            if (dateNaissance != null && !dateNaissance.isBlank()) {
+                try {
+                    dateNaissanceInstant = Instant.parse(dateNaissance);
+                } catch (Exception e) {
+                    log.warn("Date de naissance invalide : {}", dateNaissance);
+                }
+            }
 
-            // 2. Convertir la dateNaissance en Instant
-            Instant dateNaissanceInstant = Instant.parse(dateNaissance);
+            // 🔁 Conversion optionnelle du niveau d’étude
+            NiveauEtude niveauEtudeEnum = null;
+            if (niveauEtude != null && !niveauEtude.isBlank()) {
+                try {
+                    niveauEtudeEnum = NiveauEtude.valueOf(niveauEtude.toUpperCase());
+                } catch (Exception e) {
+                    log.warn("Niveau d'étude invalide : {}", niveauEtude);
+                }
+            }
 
-            // 3. Convertir le niveauEtude en Enum
-            NiveauEtude niveauEtudeEnum = NiveauEtude.valueOf(niveauEtude);
+            // 🔁 Gestion optionnelle du fichier CV
+            String savedCvUrl = null;
+            if (cvUrl != null && !cvUrl.isEmpty()) {
+                savedCvUrl = "/" + UPLOAD_DIR + "/" + saveCvFile(cvUrl);
+            }
 
-            // 4. Construire le DTO avec le chemin du fichier
+            // ✅ Construction du DTO
             RegisterCandidatDTO dto = new RegisterCandidatDTO();
             dto.setLogin(login);
             dto.setEmail(email);
@@ -92,44 +89,36 @@ public class InscriptionCandidatResource {
             dto.setNiveauEtude(niveauEtudeEnum);
             dto.setStatutActuel(statutActuel);
             dto.setProfilId(profilId);
-            dto.setCvUrl("/" + UPLOAD_DIR + "/" + filename);
+            dto.setCvUrl(savedCvUrl);
 
-            // 5. Appeler le service
+            // ✅ Appel du service
             CandidatDTO result = inscriptionCandidatService.register(dto);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(result);
         } catch (Exception e) {
             log.error("Erreur lors de l'inscription du candidat", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
-                "Erreur lors de l'inscription du candidat : " + e.getMessage()
-            );
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur lors de l'inscription : " + e.getMessage());
         }
     }
 
-    /**
-     * Sauvegarde le fichier CV sur disque et retourne le nom du fichier sauvegardé.
-     */
     private String saveCvFile(MultipartFile cvFile) throws Exception {
         String originalFilename = cvFile.getOriginalFilename();
         String filename = System.currentTimeMillis() + "_" + originalFilename;
         Path uploadPath = Paths.get(UPLOAD_DIR);
+
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
         }
-        Path filePath = uploadPath.resolve(filename);
-        // Sécurité basique : vérifier l'extension
-        if (
-            !originalFilename.toLowerCase().endsWith(".pdf") &&
-            !originalFilename.toLowerCase().endsWith(".doc") &&
-            !originalFilename.toLowerCase().endsWith(".docx")
-        ) {
+
+        if (!originalFilename.toLowerCase().matches(".*\\.(pdf|doc|docx)$")) {
             throw new IllegalArgumentException("Le CV doit être au format PDF ou Word.");
         }
-        // Limite de taille (exemple : 5 Mo)
+
         if (cvFile.getSize() > 5 * 1024 * 1024) {
             throw new IllegalArgumentException("Le fichier CV ne doit pas dépasser 5 Mo.");
         }
-        Files.copy(cvFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+        Files.copy(cvFile.getInputStream(), uploadPath.resolve(filename), StandardCopyOption.REPLACE_EXISTING);
         return filename;
     }
 }
