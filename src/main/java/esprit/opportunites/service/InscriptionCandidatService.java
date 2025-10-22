@@ -60,7 +60,7 @@ public class InscriptionCandidatService {
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
         user.setLangKey("fr");
-        user.setActivated(false);
+        user.setActivated(true);
 
         // Supprimer tous les rôles existants
         user.getAuthorities().clear();

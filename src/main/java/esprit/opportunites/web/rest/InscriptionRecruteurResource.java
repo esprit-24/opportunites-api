@@ -6,6 +6,7 @@ import esprit.opportunites.service.dto.RegisterRecruteurDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -37,6 +38,7 @@ public class InscriptionRecruteurResource {
      * @return le Recruteur créé
      */
     @PostMapping("/register-recruteur")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> registerRecruteur(
         @RequestParam("login") String login,
         @RequestParam("password") String password,
