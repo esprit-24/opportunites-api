@@ -14,7 +14,6 @@ public class RecruteurDTO implements Serializable {
 
     private String titreProfessionnel;
 
-    @Lob
     private String biographie;
 
     private UserDTO user;

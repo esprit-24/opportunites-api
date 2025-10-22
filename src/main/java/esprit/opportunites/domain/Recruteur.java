@@ -24,7 +24,6 @@ public class Recruteur implements Serializable {
     @Column(name = "titre_professionnel")
     private String titreProfessionnel;
 
-    @Lob
     @Column(name = "biographie")
     private String biographie;
 

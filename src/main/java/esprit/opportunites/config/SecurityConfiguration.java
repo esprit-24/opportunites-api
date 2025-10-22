@@ -71,6 +71,7 @@ public class SecurityConfiguration {
                     .requestMatchers(mvc.pattern("/api/account/reset-password/finish")).permitAll()
                     .requestMatchers(mvc.pattern("/api/admin/**")).hasAuthority(AuthoritiesConstants.ADMIN)
                     .requestMatchers(mvc.pattern("/api/register-candidat")).permitAll()
+                    .requestMatchers(mvc.pattern("/api/register-recruteur")).hasAuthority(AuthoritiesConstants.ADMIN)
                     .requestMatchers(mvc.pattern("/management/**")).hasAuthority(AuthoritiesConstants.ADMIN)
                     .requestMatchers(mvc.pattern(HttpMethod.GET,  "/api/domaines/**")).permitAll()
                     .requestMatchers(mvc.pattern("/api/domaines/**")).hasAuthority(AuthoritiesConstants.ADMIN)

@@ -39,7 +39,7 @@ public class InscriptionCandidatResource {
         @RequestParam("profilId") Long profilId
     ) {
         try {
-            // ✅ Champs essentiels uniquement
+            // Champs essentiels uniquement
             if (
                 login == null ||
                 login.isBlank() ||
@@ -52,7 +52,7 @@ public class InscriptionCandidatResource {
                 return ResponseEntity.badRequest().body("Champs obligatoires manquants : login, password, email, profilId.");
             }
 
-            // 🔁 Conversion optionnelle de la date
+            // Conversion optionnelle de la date
             Instant dateNaissanceInstant = null;
             if (dateNaissance != null && !dateNaissance.isBlank()) {
                 try {
@@ -62,7 +62,7 @@ public class InscriptionCandidatResource {
                 }
             }
 
-            // 🔁 Conversion optionnelle du niveau d’étude
+            // Conversion optionnelle du niveau d’étude
             NiveauEtude niveauEtudeEnum = null;
             if (niveauEtude != null && !niveauEtude.isBlank()) {
                 try {
@@ -72,13 +72,13 @@ public class InscriptionCandidatResource {
                 }
             }
 
-            // 🔁 Gestion optionnelle du fichier CV
+            // Gestion optionnelle du fichier CV
             String savedCvUrl = null;
             if (cvUrl != null && !cvUrl.isEmpty()) {
                 savedCvUrl = "/" + UPLOAD_DIR + "/" + saveCvFile(cvUrl);
             }
 
-            // ✅ Construction du DTO
+            // Construction du DTO
             RegisterCandidatDTO dto = new RegisterCandidatDTO();
             dto.setLogin(login);
             dto.setEmail(email);
@@ -91,7 +91,7 @@ public class InscriptionCandidatResource {
             dto.setProfilId(profilId);
             dto.setCvUrl(savedCvUrl);
 
-            // ✅ Appel du service
+            // Appel du service
             CandidatDTO result = inscriptionCandidatService.register(dto);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(result);
