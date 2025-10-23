@@ -22,16 +22,22 @@ public interface OpportuniteMapper extends EntityMapper<OpportuniteDTO, Opportun
 
     @Named("domaineId")
     @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
+    @Mappings({ @Mapping(target = "id", source = "id"), @Mapping(target = "intitule", source = "intitule") })
     DomaineDTO toDtoDomaineId(Domaine domaine);
 
     @Named("organisationId")
     @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
+    @Mappings(
+        {
+            @Mapping(target = "id", source = "id"),
+            @Mapping(target = "nom", source = "nom"),
+            @Mapping(target = "secteurActivite", source = "secteurActivite"),
+        }
+    )
     OrganisationDTO toDtoOrganisationId(Organisation organisation);
 
     @Named("villeId")
     @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
+    @Mappings({ @Mapping(target = "id", source = "id"), @Mapping(target = "nom", source = "nom") })
     VilleDTO toDtoVilleId(Ville ville);
 }

@@ -33,7 +33,6 @@ public class Opportunite implements Serializable {
     @Column(name = "titre", nullable = false)
     private String titre;
 
-    @Lob
     @Column(name = "description", nullable = false)
     private String description;
 
@@ -60,7 +59,7 @@ public class Opportunite implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "statut")
-    private Statut statut;
+    private Statut statut = Statut.ACTIVE;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type_contrat")

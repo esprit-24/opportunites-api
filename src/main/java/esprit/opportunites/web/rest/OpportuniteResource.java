@@ -18,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -55,6 +56,7 @@ public class OpportuniteResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<OpportuniteDTO> createOpportunite(@Valid @RequestBody OpportuniteDTO opportuniteDTO) throws URISyntaxException {
         LOG.debug("REST request to save Opportunite : {}", opportuniteDTO);
         if (opportuniteDTO.getId() != null) {
@@ -77,6 +79,7 @@ public class OpportuniteResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<OpportuniteDTO> updateOpportunite(
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody OpportuniteDTO opportuniteDTO
@@ -111,6 +114,7 @@ public class OpportuniteResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<OpportuniteDTO> partialUpdateOpportunite(
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody OpportuniteDTO opportuniteDTO
@@ -169,6 +173,7 @@ public class OpportuniteResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteOpportunite(@PathVariable("id") Long id) {
         LOG.debug("REST request to delete Opportunite : {}", id);
         opportuniteService.delete(id);
