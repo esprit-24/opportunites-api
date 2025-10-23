@@ -16,6 +16,6 @@ public interface ProfilMapper extends EntityMapper<ProfilDTO, Profil> {
 
     @Named("domaineId")
     @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
+    @Mappings({ @Mapping(target = "id", source = "id"), @Mapping(target = "intitule", source = "intitule") })
     DomaineDTO toDtoDomaineId(Domaine domaine);
 }
