@@ -21,7 +21,6 @@ public class OpportuniteDTO implements Serializable {
     @NotNull
     private String titre;
 
-    @Lob
     private String description;
 
     @NotNull
