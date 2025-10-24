@@ -30,11 +30,11 @@ public class Candidature implements Serializable {
     @Column(name = "date_postulation", nullable = false)
     private Instant datePostulation;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "statut_candidature")
     private StatutCandidature statutCandidature;
 
-    @Lob
     @Column(name = "lettre_motivation")
     private String lettreMotivation;
 

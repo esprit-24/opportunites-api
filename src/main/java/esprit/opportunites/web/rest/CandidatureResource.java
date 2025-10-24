@@ -14,14 +14,10 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
-import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -32,14 +28,12 @@ import tech.jhipster.web.util.ResponseUtil;
 public class CandidatureResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(CandidatureResource.class);
-
     private static final String ENTITY_NAME = "candidature";
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final CandidatureService candidatureService;
-
     private final CandidatureRepository candidatureRepository;
 
     public CandidatureResource(CandidatureService candidatureService, CandidatureRepository candidatureRepository) {
@@ -47,14 +41,9 @@ public class CandidatureResource {
         this.candidatureRepository = candidatureRepository;
     }
 
-    /**
-     * {@code POST  /candidatures} : Create a new candidature.
-     *
-     * @param candidatureDTO the candidatureDTO to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new candidatureDTO, or with status {@code 400 (Bad Request)} if the candidature has already an ID.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
+    // Étudiant crée une candidature
     @PostMapping("")
+    @PreAuthorize("hasAuthority('ROLE_CANDIDAT')")
     public ResponseEntity<CandidatureDTO> createCandidature(@Valid @RequestBody CandidatureDTO candidatureDTO) throws URISyntaxException {
         LOG.debug("REST request to save Candidature : {}", candidatureDTO);
         if (candidatureDTO.getId() != null) {
@@ -66,17 +55,9 @@ public class CandidatureResource {
             .body(candidatureDTO);
     }
 
-    /**
-     * {@code PUT  /candidatures/:id} : Updates an existing candidature.
-     *
-     * @param id the id of the candidatureDTO to save.
-     * @param candidatureDTO the candidatureDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated candidatureDTO,
-     * or with status {@code 400 (Bad Request)} if the candidatureDTO is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the candidatureDTO couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
+    // Admin / Recruteur peuvent modifier une candidature
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_RECRUTEUR')")
     public ResponseEntity<CandidatureDTO> updateCandidature(
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody CandidatureDTO candidatureDTO
@@ -99,62 +80,25 @@ public class CandidatureResource {
             .body(candidatureDTO);
     }
 
-    /**
-     * {@code PATCH  /candidatures/:id} : Partial updates given fields of an existing candidature, field will ignore if it is null
-     *
-     * @param id the id of the candidatureDTO to save.
-     * @param candidatureDTO the candidatureDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated candidatureDTO,
-     * or with status {@code 400 (Bad Request)} if the candidatureDTO is not valid,
-     * or with status {@code 404 (Not Found)} if the candidatureDTO is not found,
-     * or with status {@code 500 (Internal Server Error)} if the candidatureDTO couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
-    @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<CandidatureDTO> partialUpdateCandidature(
-        @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody CandidatureDTO candidatureDTO
-    ) throws URISyntaxException {
-        LOG.debug("REST request to partial update Candidature partially : {}, {}", id, candidatureDTO);
-        if (candidatureDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, candidatureDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!candidatureRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        Optional<CandidatureDTO> result = candidatureService.partialUpdate(candidatureDTO);
-
-        return ResponseUtil.wrapOrNotFound(
-            result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, candidatureDTO.getId().toString())
-        );
-    }
-
-    /**
-     * {@code GET  /candidatures} : get all the candidatures.
-     *
-     * @param pageable the pagination information.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of candidatures in body.
-     */
+    // Récupérer toutes les candidatures (Admin/Recruteur uniquement)
     @GetMapping("")
-    public ResponseEntity<List<CandidatureDTO>> getAllCandidatures(@org.springdoc.core.annotations.ParameterObject Pageable pageable) {
-        LOG.debug("REST request to get a page of Candidatures");
-        Page<CandidatureDTO> page = candidatureService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_RECRUTEUR')")
+    public ResponseEntity<List<CandidatureDTO>> getAllCandidatures() {
+        LOG.debug("REST request to get all Candidatures");
+        List<CandidatureDTO> list = candidatureService.findAll();
+        return ResponseEntity.ok().body(list);
     }
 
-    /**
-     * {@code GET  /candidatures/:id} : get the "id" candidature.
-     *
-     * @param id the id of the candidatureDTO to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the candidatureDTO, or with status {@code 404 (Not Found)}.
-     */
+    // Récupérer les candidatures du candidat connecté (Étudiant)
+    @GetMapping("/candidat/{id}")
+    @PreAuthorize("hasAuthority('ROLE_CANDIDAT')")
+    public ResponseEntity<List<CandidatureDTO>> getCandidaturesByCandidat(@PathVariable("id") Long id) {
+        LOG.debug("REST request to get Candidatures by Candidat ID : {}", id);
+        List<CandidatureDTO> list = candidatureService.findByCandidat(id);
+        return ResponseEntity.ok().body(list);
+    }
+
+    // Récupérer une candidature par ID
     @GetMapping("/{id}")
     public ResponseEntity<CandidatureDTO> getCandidature(@PathVariable("id") Long id) {
         LOG.debug("REST request to get Candidature : {}", id);
@@ -162,13 +106,9 @@ public class CandidatureResource {
         return ResponseUtil.wrapOrNotFound(candidatureDTO);
     }
 
-    /**
-     * {@code DELETE  /candidatures/:id} : delete the "id" candidature.
-     *
-     * @param id the id of the candidatureDTO to delete.
-     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
-     */
+    // Supprimer une candidature
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_RECRUTEUR')")
     public ResponseEntity<Void> deleteCandidature(@PathVariable("id") Long id) {
         LOG.debug("REST request to delete Candidature : {}", id);
         candidatureService.delete(id);

@@ -18,9 +18,9 @@ public class CandidatureDTO implements Serializable {
     @NotNull
     private Instant datePostulation;
 
+    @NotNull
     private StatutCandidature statutCandidature;
 
-    @Lob
     private String lettreMotivation;
 
     private OpportuniteDTO opportunite;

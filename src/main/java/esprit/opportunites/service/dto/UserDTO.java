@@ -12,8 +12,9 @@ public class UserDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
-
     private String login;
+    private String firstName;
+    private String lastName;
 
     public UserDTO() {
         // Empty constructor needed for Jackson.
@@ -21,10 +22,12 @@ public class UserDTO implements Serializable {
 
     public UserDTO(User user) {
         this.id = user.getId();
-        // Customize it here if you need, or not, firstName/lastName/etc
         this.login = user.getLogin();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
     }
 
+    // === Getters & Setters ===
     public Long getId() {
         return id;
     }
@@ -41,34 +44,52 @@ public class UserDTO implements Serializable {
         this.login = login;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
         UserDTO userDTO = (UserDTO) o;
-        if (userDTO.getId() == null || getId() == null) {
-            return false;
-        }
-
-        return Objects.equals(getId(), userDTO.getId()) && Objects.equals(getLogin(), userDTO.getLogin());
+        return Objects.equals(id, userDTO.id) && Objects.equals(login, userDTO.login);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getLogin());
+        return Objects.hash(id, login);
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
-        return "UserDTO{" +
-            "id='" + id + '\'' +
-            ", login='" + login + '\'' +
-            "}";
+        return (
+            "UserDTO{" +
+            "id=" +
+            id +
+            ", login='" +
+            login +
+            '\'' +
+            ", firstName='" +
+            firstName +
+            '\'' +
+            ", lastName='" +
+            lastName +
+            '\'' +
+            '}'
+        );
     }
 }

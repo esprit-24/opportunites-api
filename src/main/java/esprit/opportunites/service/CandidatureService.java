@@ -1,14 +1,15 @@
 package esprit.opportunites.service;
 
+import esprit.opportunites.domain.Candidat;
 import esprit.opportunites.domain.Candidature;
+import esprit.opportunites.domain.Opportunite;
 import esprit.opportunites.repository.CandidatureRepository;
 import esprit.opportunites.service.dto.CandidatureDTO;
 import esprit.opportunites.service.mapper.CandidatureMapper;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +23,6 @@ public class CandidatureService {
     private static final Logger LOG = LoggerFactory.getLogger(CandidatureService.class);
 
     private final CandidatureRepository candidatureRepository;
-
     private final CandidatureMapper candidatureMapper;
 
     public CandidatureService(CandidatureRepository candidatureRepository, CandidatureMapper candidatureMapper) {
@@ -32,22 +32,25 @@ public class CandidatureService {
 
     /**
      * Save a candidature.
-     *
-     * @param candidatureDTO the entity to save.
-     * @return the persisted entity.
      */
     public CandidatureDTO save(CandidatureDTO candidatureDTO) {
         LOG.debug("Request to save Candidature : {}", candidatureDTO);
         Candidature candidature = candidatureMapper.toEntity(candidatureDTO);
+
+        // Vérifier si le candidat a déjà postulé à la même opportunité
+        Candidat candidat = candidature.getCandidat();
+        Opportunite opportunite = candidature.getOpportunite();
+
+        if (candidat != null && opportunite != null && candidatureRepository.existsByCandidatAndOpportunite(candidat, opportunite)) {
+            throw new IllegalStateException("Vous avez déjà postulé à cette opportunité.");
+        }
+
         candidature = candidatureRepository.save(candidature);
         return candidatureMapper.toDto(candidature);
     }
 
     /**
      * Update a candidature.
-     *
-     * @param candidatureDTO the entity to save.
-     * @return the persisted entity.
      */
     public CandidatureDTO update(CandidatureDTO candidatureDTO) {
         LOG.debug("Request to update Candidature : {}", candidatureDTO);
@@ -57,42 +60,25 @@ public class CandidatureService {
     }
 
     /**
-     * Partially update a candidature.
-     *
-     * @param candidatureDTO the entity to update partially.
-     * @return the persisted entity.
+     * Get all the candidatures.
      */
-    public Optional<CandidatureDTO> partialUpdate(CandidatureDTO candidatureDTO) {
-        LOG.debug("Request to partially update Candidature : {}", candidatureDTO);
-
-        return candidatureRepository
-            .findById(candidatureDTO.getId())
-            .map(existingCandidature -> {
-                candidatureMapper.partialUpdate(existingCandidature, candidatureDTO);
-
-                return existingCandidature;
-            })
-            .map(candidatureRepository::save)
-            .map(candidatureMapper::toDto);
+    @Transactional(readOnly = true)
+    public List<CandidatureDTO> findAll() {
+        LOG.debug("Request to get all Candidatures");
+        return candidatureRepository.findAll().stream().map(candidatureMapper::toDto).toList();
     }
 
     /**
-     * Get all the candidatures.
-     *
-     * @param pageable the pagination information.
-     * @return the list of entities.
+     * Get all candidatures for a given candidat.
      */
     @Transactional(readOnly = true)
-    public Page<CandidatureDTO> findAll(Pageable pageable) {
-        LOG.debug("Request to get all Candidatures");
-        return candidatureRepository.findAll(pageable).map(candidatureMapper::toDto);
+    public List<CandidatureDTO> findByCandidat(Long candidatId) {
+        LOG.debug("Request to get Candidatures by Candidat ID : {}", candidatId);
+        return candidatureRepository.findByCandidatId(candidatId).stream().map(candidatureMapper::toDto).toList();
     }
 
     /**
      * Get one candidature by id.
-     *
-     * @param id the id of the entity.
-     * @return the entity.
      */
     @Transactional(readOnly = true)
     public Optional<CandidatureDTO> findOne(Long id) {
@@ -102,8 +88,6 @@ public class CandidatureService {
 
     /**
      * Delete the candidature by id.
-     *
-     * @param id the id of the entity.
      */
     public void delete(Long id) {
         LOG.debug("Request to delete Candidature : {}", id);
