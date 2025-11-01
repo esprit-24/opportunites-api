@@ -13,12 +13,12 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface CandidatureRepository extends JpaRepository<Candidature, Long> {
-    // 🔍 Récupérer toutes les candidatures d’un candidat
+    // Récupérer toutes les candidatures d’un candidat
     List<Candidature> findByCandidatId(Long candidatId);
 
-    // 🔍 Récupérer toutes les candidatures pour une opportunité
+    // Récupérer toutes les candidatures pour une opportunité
     List<Candidature> findByOpportuniteId(Long opportuniteId);
 
-    // 🔍 Vérifier si un candidat a déjà postulé à une opportunité
+    // Vérifier si un candidat a déjà postulé à une opportunité
     boolean existsByCandidatAndOpportunite(Candidat candidat, Opportunite opportunite);
 }
